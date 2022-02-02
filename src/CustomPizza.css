@@ -6,22 +6,23 @@
 }
 
 .custom-image {
-  flex: 1;
+  flex: 0.3;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .custom-image > img {
-  width: 50%;
+  width: 100%;
 }
 
 .custom-pizza-form {
-  flex: 1;
+  flex: 0.7;
+  display: flex;
 }
 
 .form-card {
-  width: 650px;
+  width: 100% !important;
 }
 
 form,
@@ -31,4 +32,73 @@ form,
 
 .form-control {
   margin-bottom: 15px;
+}
+
+.form-left {
+  flex: 0.6;
+}
+
+.form-right {
+  flex: 0.4;
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  padding: 25px;
+  background-color: rgb(248, 248, 248);
+  border: solid 1px #dddddd;
+  border-radius: 5px;
+}
+
+.varieties-header {
+  display: flex;
+  align-items: center;
+}
+
+.varieties-header > .userInput {
+  margin-bottom: 0 !important;
+}
+
+.accordion-btn {
+  background: none;
+  border: none;
+}
+
+.accordion-btn > svg {
+  width: 25px;
+  height: 25px;
+  color: #a62d26;
+}
+
+.accordion-btn > svg:hover {
+  cursor: pointer;
+}
+
+.customBtn {
+  margin-top: 20px !important;
+}
+
+.varieties-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.varieties-accordion {
+  border-radius: 3px;
+  box-shadow: 1px 1px 3px 1px #bfbfbf;
+  padding: 10px 10px;
+  margin-top: 20px;
+}
+
+.checkbox-variety {
+  margin-top: 10px;
+}
+
+.checkbox-variety > div {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-variety > div > input {
+  margin-right: 10px;
 }

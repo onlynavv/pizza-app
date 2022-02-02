@@ -12,6 +12,8 @@ const Pizzas = () => {
         .then((products)=> setPizzasProd(products))
     },[])
 
+    console.log(pizzasProd)
+
     return (
         pizzasProd ?  (
         <>

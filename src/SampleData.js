@@ -1,0 +1,27 @@
+export const meatItems = [
+    {
+        "name":"chicken",
+        "price":20,
+        "id":100
+    },
+    {
+        "name":"beef",
+        "price":25,
+        "id":101
+    },
+    {
+        "name":"ham",
+        "price":30,
+        "id":102
+    },
+    {
+        "name":"bacon",
+        "price":35,
+        "id":103
+    },
+    {
+        "name":"pork",
+        "price":40,
+        "id":104
+    }
+]

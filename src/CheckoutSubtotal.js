@@ -1,13 +1,16 @@
 import React,{useState, useEffect} from 'react'
 import './SubTotal.css'
 import { useGlobalContext } from './context'
-import { useHistory } from 'react-router-dom'
 
-const SubTotal = () => {
+const CheckoutSubtotal = () => {
 
-    const {cart} = useGlobalContext()
+    const {cart, userauthenticate, user, isUserLoggedIn, placeOrder} = useGlobalContext()
 
-    const history = useHistory()
+    useEffect(() => {
+        if(!userauthenticate){
+            isUserLoggedIn()
+        }
+    }, [])
 
     const [total,setTotal] = useState(0)
     const [totalItems,setTotalItems] = useState(0)
@@ -31,10 +34,10 @@ const SubTotal = () => {
             <p>
                 Subtotal ({totalItems} items): <strong>Rs. {total}</strong>
             </p>
-            
-            <button onClick={()=>{history.push("/checkout")}}>Proceed to checkout</button>
+            {userauthenticate ? <p>Order confirmation will be sent to <b>{user.email}</b></p> : ""}
+            <button onClick={()=>{placeOrder(cart, user._id, total, user.email)}}>Place Order</button>
         </div>
     )
 }
 
-export default SubTotal
+export default CheckoutSubtotal

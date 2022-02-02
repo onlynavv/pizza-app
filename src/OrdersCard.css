@@ -1,0 +1,198 @@
+.orders-container {
+  background: white;
+  width: 850px;
+  border: none;
+  border-radius: 15px;
+  overflow: hidden;
+  padding: 20px;
+  margin-bottom: 30px;
+  height: 700px;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  box-shadow: 2px 3px 9px 1px #bdbdbd;
+}
+
+.orders-container > img {
+  width: 100%;
+  object-fit: cover;
+  height: 230px;
+}
+
+.orders-body {
+  padding: 20px 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.orders-info {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
+  margin-bottom: 15px;
+  align-items: center;
+}
+
+.orders-desc {
+  display: flex;
+  gap: 10px;
+  font-weight: 300;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px;
+}
+
+.orders-desc > * {
+  margin-bottom: 10px;
+}
+
+.variant {
+  background: whitesmoke;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  padding: 7px;
+  text-transform: uppercase;
+}
+
+.orders-price {
+  background: #24963f;
+  color: white;
+  padding: 6px 8px;
+  border-radius: 5px;
+  font-weight: 500;
+}
+
+.add-btn {
+  width: 70px;
+  text-align: center;
+  margin: 5px auto;
+  border: solid 2px #ff5959;
+  background: transparent;
+  border-radius: 5px;
+  padding: 7px 15px;
+}
+
+.add-btn:hover {
+  cursor: pointer;
+}
+
+.add-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.quantity-container {
+  display: flex;
+  align-items: center;
+}
+
+.amount-display {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  border: solid 1px black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0px 5px;
+}
+
+.qty-btn {
+  width: 25px;
+  height: 25px;
+  border-radius: 8px;
+  border: solid 1px black;
+  background-color: transparent;
+}
+
+.users-orders-list {
+  width: 100%;
+  display: flex;
+}
+
+.orderCard-product {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 10px;
+  justify-content: space-evenly;
+  background: #f9f9f9;
+  border-radius: 8px;
+  margin-right: 10px;
+  box-shadow: 2px 3px 3px 2px #ebebeb;
+}
+
+.orderCardProduct-info {
+  padding-left: 20px;
+}
+
+.orderCardProduct-info > * {
+  margin-bottom: 10px;
+}
+
+.orderCardProduct-info > button {
+  background-image: linear-gradient(to bottom, #f7d173, #e2c13e);
+  border: solid 1px #a88734;
+  margin-top: 10px;
+  color: black;
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: fit-content;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.orderCardProduct-btn {
+  background-image: linear-gradient(to bottom, #f7d173, #e2c13e);
+  border: solid 1px #a88734;
+  margin-top: 10px;
+  color: black;
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: fit-content;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.orderCardProduct-title {
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.variant-box {
+  background: #04f771;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  padding: 7px;
+  text-transform: uppercase;
+  width: fit-content;
+}
+
+.stage-row {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  margin-top: 20px;
+  align-items: center;
+}
+
+.stage-row > div {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.stage-row > div > * {
+  margin-right: 5px;
+}
+
+.stage-header {
+  display: flex;
+  margin-bottom: 10px;
+}

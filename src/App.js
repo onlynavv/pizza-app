@@ -6,6 +6,14 @@ import CustomPizza from "./CustomPizza";
 import Orders from "./Orders";
 import Error from "./Error";
 import Cart from "./Cart"
+import Login from "./Login";
+import Register from "./Register";
+import OrderTracking from "./OrderTracking";
+import AdminLogin from "./AdminLogin";
+import AdminRegister from "./AdminRegister";
+import CheckoutPage from "./CheckoutPage";
+import AdminDashboard from "./AdminDashboard";
+import AdminInventory from "./AdminInventory";
 
 function App() {
   return (
@@ -24,6 +32,30 @@ function App() {
           </Route>
           <Route path="/cart">
             <Cart />
+          </Route>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route path="/register">
+            <Register />
+          </Route>
+          <Route path="/admin-login">
+            <AdminLogin />
+          </Route>
+          <Route path="/admin-register">
+            <AdminRegister />
+          </Route>
+          <Route path="/admin-dashboard">
+            <AdminDashboard />
+          </Route>
+          <Route path="/admin-inventory">
+            <AdminInventory />
+          </Route>
+          <Route path="/ordertrack">
+            <OrderTracking />
+          </Route>
+          <Route path="/checkout">
+            <CheckoutPage />
           </Route>
           <Route path='**'>
             <Error />

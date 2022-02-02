@@ -2,7 +2,7 @@ import React from 'react'
 import { useGlobalContext } from './context'
 import "./PizzaCard.css"
 
-const PizzaCard = ({_id, img, name, price, size, desc}) => {
+const PizzaCard = ({_id, img, name, price, desc}) => {
     const despTruncate = (string, n) => {
         return string?.length > n ? string.substr(0,n-1) + '...' : string
     }
@@ -15,13 +15,14 @@ const PizzaCard = ({_id, img, name, price, size, desc}) => {
             <div className="pizzas-body">
                 <div className="pizzas-info">
                     <h4>{name}</h4>
-                    <h5 className="variant">{size}</h5>
+                    <p className="pizzas-price">₹{price}</p>
                 </div>
                 <div className="pizzas-desc">
                     <p>{despTruncate(desc,50) }</p>
-                    <p className="pizzas-price">₹{price}</p>
                 </div>
-                <button className="add-btn" onClick={()=> addToCart(_id,img, name, price, size, desc)}>Add</button>
+                <div className="add-container">
+                    <button className="add-btn" onClick={()=> addToCart({_id,img, name, price, desc})}>Add</button>
+                </div>
             </div>
         </div>
     )

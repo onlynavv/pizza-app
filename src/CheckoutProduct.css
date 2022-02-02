@@ -5,7 +5,7 @@
   margin-bottom: 20px;
   padding: 10px;
   border-bottom: solid 1px lightgray;
-  justify-content: space-evenly;
+  justify-content: flex-start;
 }
 
 .checkoutProduct-info {
@@ -61,4 +61,28 @@
   padding: 7px;
   text-transform: uppercase;
   width: fit-content;
+}
+
+.quantity-container {
+  display: flex;
+  align-items: center;
+}
+
+.amount-display {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  border: solid 1px black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0px 5px;
+}
+
+.qty-btn {
+  width: 25px;
+  height: 25px;
+  border-radius: 8px;
+  border: solid 1px black;
+  background-color: transparent;
 }

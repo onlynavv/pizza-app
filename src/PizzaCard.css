@@ -74,3 +74,33 @@
 .add-btn:hover {
   cursor: pointer;
 }
+
+.add-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.quantity-container {
+  display: flex;
+  align-items: center;
+}
+
+.amount-display {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  border: solid 1px black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0px 5px;
+}
+
+.qty-btn {
+  width: 25px;
+  height: 25px;
+  border-radius: 8px;
+  border: solid 1px black;
+  background-color: transparent;
+}

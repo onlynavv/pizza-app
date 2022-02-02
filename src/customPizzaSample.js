@@ -12,7 +12,6 @@ import { FormHelperText } from '@mui/material';
 import "./SubTotal.css"
 import {AiFillPlusCircle, AiFillMinusCircle} from "react-icons/ai"
 import { useGlobalContext } from './context';
-import {nanoid} from "nanoid"
 
 const validateFormSchema = yup.object({
     base: yup.string().required('Please choose the Pizza Base'),
@@ -25,17 +24,8 @@ const CustomPizza = () => {
     const [showVarietyDiv, setShowVarietyDiv] = useState(false)
     const [showMeatDiv, setShowMeatDiv] = useState(false)
 
-    const [meatInitialValue, setMeatInitialValue] = useState([])
     const [meatValue, setMeatValue] = useState([])
-    const [meatItems, setMeatItems] = useState([])
-
-    const [vegInitialValue, setVegInitialValue] = useState([])
     const [veggiesValue, setVeggiesValue] = useState([])
-    const [vegItems, setVegItems] = useState([])
-
-    const [pizzaInitialValue, setPizzaInitialValue] = useState([])
-    const [sauceInitialValue, setSauceInitialValue] = useState([])
-    const [cheeseInitialValue, setCheeseInitialValue] = useState([])
 
     const [total, setTotal] = useState(0)
 
@@ -46,31 +36,12 @@ const CustomPizza = () => {
     const image = "https://www.pngall.com/wp-content/uploads/4/Pepperoni-Dominos-Pizza-PNG-Free-Download.png"
 
     useEffect(() => {
-        fetch("https://pizza-api-task.herokuapp.com/pizzas/ingredients/getIngredients")
+        fetch("http://localhost:9000/pizzas/ingredients/getIngredients")
         .then((data)=> data.json())
         .then((products)=> setIngredients(products))
     }, [])
 
     console.log(ingredients)
-
-    useEffect(()=>{
-        const meatOptions = ingredients.length > 0 && ingredients.filter((item)=>{return item.ingredientType === "meat"})
-        setMeatInitialValue(meatOptions)
-        const vegOptions = ingredients.length > 0 && ingredients.filter((item)=>{return item.ingredientType === "veggies"})
-        setVegInitialValue(vegOptions)
-        const pizzaOptions = ingredients.length > 0 && ingredients.filter((item)=>{return item.ingredientType === "pizzabase"})
-        setPizzaInitialValue(pizzaOptions)
-        const sauceOptions = ingredients.length > 0 && ingredients.filter((item)=>{return item.ingredientType === "sauce"})
-        setSauceInitialValue(sauceOptions)
-        const cheeseOptions = ingredients.length > 0 && ingredients.filter((item)=>{return item.ingredientType === "cheese"})
-        setCheeseInitialValue(cheeseOptions)
-    },[ingredients])
-
-    console.log(meatInitialValue, "meat")
-    console.log(vegInitialValue, "veggies")
-    console.log(pizzaInitialValue, "pizzabase")
-    console.log(sauceInitialValue, "sauce")
-    console.log(cheeseInitialValue, "cheese")
 
     let meatCounter = 0
     let meatPriceCounter = 0
@@ -82,12 +53,12 @@ const CustomPizza = () => {
         console.log(e.target.value)
         let value
         if(e.target.checked){
-            value = meatInitialValue.find((item)=>{
+            value = ingredients[0].ingredients.find((item)=>{
                 return item.ingredientName === e.target.value
             })
-            setMeatValue([...meatValue, value.ingredientName])
+            setMeatValue([...meatValue, value])
         }else{
-            const newValue = meatValue.filter((item)=>{return item !== e.target.value})
+            const newValue = meatValue.filter((item)=>{return item.ingredientName != e.target.value})
             setMeatValue(newValue)
         }
         console.log(value)
@@ -95,20 +66,7 @@ const CustomPizza = () => {
 
     console.log(meatValue)
 
-    useEffect(()=>{
-        let meatArr = []
-        
-        for(let i = 0; i<meatValue.length; i++){
-            console.log(i)
-            console.log(meatValue[i])
-            let meatList = meatInitialValue.find((item)=>{return item.ingredientName === meatValue[i]})
-            meatArr.push(meatList)
-        }
-        console.log(meatArr)
-        setMeatItems(meatArr)
-    },[meatValue])
-
-    const meatTotal = meatItems.reduce((acc, curr)=>{
+    const meatTotal = meatValue.reduce((acc, curr)=>{
         meatPriceCounter++
         if(meatPriceCounter <= 1){
             return 0
@@ -117,17 +75,18 @@ const CustomPizza = () => {
         }
         
     },0)
+
     console.log(meatTotal)
 
     const handleVeggiesChange = (e) => {
         let vegValue
         if(e.target.checked){
-            vegValue = vegInitialValue.find((item)=>{
+            vegValue = ingredients[1].ingredients.find((item)=>{
                 return item.ingredientName === e.target.value
             })
-            setVeggiesValue([...veggiesValue, vegValue.ingredientName])
+            setVeggiesValue([...veggiesValue, vegValue])
         }else{
-            const newValue = veggiesValue.filter((item)=>{return item !== e.target.value})
+            const newValue = veggiesValue.filter((item)=>{return item.ingredientName != e.target.value})
             setVeggiesValue(newValue)
         }
         console.log(vegValue)
@@ -135,20 +94,7 @@ const CustomPizza = () => {
 
     console.log(veggiesValue)
 
-    useEffect(()=>{
-        let veggiesArr = []
-        
-        for(let i = 0; i<veggiesValue.length; i++){
-            console.log(i)
-            console.log(veggiesValue[i])
-            let vegList = vegInitialValue.find((item)=>{return item.ingredientName === veggiesValue[i]})
-            veggiesArr.push(vegList)
-        }
-        console.log(veggiesArr)
-        setVegItems(veggiesArr)
-    },[veggiesValue])
-
-    const veggiesTotal = vegItems.reduce((acc, curr)=>{
+    const veggiesTotal = veggiesValue.reduce((acc, curr)=>{
         veggiesPriceCounter++
         if(veggiesPriceCounter <= 3){
             return 0
@@ -159,6 +105,7 @@ const CustomPizza = () => {
     },0)
 
     console.log(veggiesTotal)
+
     
 
     const {handleBlur, handleChange, handleSubmit, errors, values, touched} = useFormik(
@@ -171,37 +118,32 @@ const CustomPizza = () => {
         }
     )
 
-    console.log(values.base)
-
     const addProduct = (values) => {
-        const ingredientsList = [values.base, values.sauce, values.cheese,...veggiesValue, ...meatValue]
-        
-        console.log({_id: nanoid(6),img:image,ingredients:ingredientsList.filter((item)=>{return item !== "none"}),name:"custompizza",price:total})
+        console.log({_id: new Date().getTime().toString(),img:image,ingredients:{...values,veggies:veggiesValue, meat:meatValue}, price:total,name:"custompizza"})
 
-        addToCart({_id: nanoid(6),img:image,ingredients:ingredientsList.filter((item)=>{return item !== "none"}),name:"custompizza",price:total})
-        console.log(values)
+        addToCart({_id: new Date().getTime().toString(),img:image,ingredients:{...values,veggies:veggiesValue, meat:meatValue}, price:total,name:"custompizza"})
     }
 
     // pizza base total
 
-    let baseValue = pizzaInitialValue.length > 0 && pizzaInitialValue.find((item)=>{
+    let baseValue = ingredients.length > 0 && ingredients[2].ingredients.find((item)=>{
         return item.ingredientName === values.base
     })
 
-    console.log(baseValue)
-
-    let sauceValue = sauceInitialValue.length > 0 && sauceInitialValue.find((item)=>{
+    let sauceValue = ingredients.length > 0 && ingredients[3].ingredients.find((item)=>{
         return item.ingredientName === values.sauce
     })
 
-    let cheeseValue = cheeseInitialValue.length > 0 && cheeseInitialValue.find((item)=>{
+    let cheeseValue = ingredients.length > 0 && ingredients[4].ingredients.find((item)=>{
         return item.ingredientName === values.cheese
     })
+
+    console.log(sauceValue)
 
     useEffect(() => {
         let customPizzaTotal = meatTotal + veggiesTotal + (baseValue ? baseValue.price : 0) + (sauceValue ? sauceValue.price : 0) + (cheeseValue ? cheeseValue.price : 0)
         setTotal(customPizzaTotal)
-    }, [meatItems, vegItems, baseValue, sauceValue, cheeseValue])
+    }, [meatValue, veggiesValue, baseValue, sauceValue, cheeseValue])
 
     return (
         <section className="container custom-pizza-wrapper">
@@ -228,10 +170,13 @@ const CustomPizza = () => {
                                         <MenuItem value="none">
                                             <em>None</em>
                                         </MenuItem>
-                                    
-                                        {pizzaInitialValue.length > 0 && pizzaInitialValue.map((item)=>{
-                                            const {_id, ingredientName} = item   
-                                                return <MenuItem value={ingredientName} key={_id}>{ingredientName}</MenuItem>
+                                        {/* <MenuItem value={"Pizza Bagels"}>Pizza Bagels</MenuItem>
+                                        <MenuItem value={"Cheese-Stuffed Crus"}>Cheese-Stuffed Crust</MenuItem>
+                                        <MenuItem value={"Flatbread"}>Flatbread</MenuItem>
+                                        <MenuItem value={"Thin Crust"}>Thin Crust</MenuItem>
+                                        <MenuItem value={"New York Style"}>New York Style</MenuItem> */}
+                                        {ingredients.length > 0 && ingredients[2].ingredients.map((item, index)=>{    
+                                                return <MenuItem value={item.ingredientName} key={item.ingredientName}>{item.ingredientName}</MenuItem>
                                         })}
                                     </Select>
                                     <FormHelperText>{errors.base && touched.base && errors.base}</FormHelperText>
@@ -252,10 +197,13 @@ const CustomPizza = () => {
                                         <MenuItem value="none">
                                             <em>None</em>
                                         </MenuItem>
-                                        
-                                        {sauceInitialValue.length > 0 && sauceInitialValue.map((item)=>{
-                                            const {_id, ingredientName} = item    
-                                                return <MenuItem value={ingredientName} key={_id}>{ingredientName}</MenuItem>
+                                        {/* <MenuItem value={"Pesto"}>Pesto</MenuItem>
+                                        <MenuItem value={"White Garlic Sauce"}>White Garlic Sauce</MenuItem>
+                                        <MenuItem value={"Garlic Ranch Sauce"}>Garlic Ranch Sauce</MenuItem>
+                                        <MenuItem value={"Hummus"}>Hummus</MenuItem>
+                                        <MenuItem value={"Buffalo Sauce"}>Buffalo Sauce</MenuItem> */}
+                                        {ingredients.length > 0 && ingredients[3].ingredients.map((item, index)=>{    
+                                                return <MenuItem value={item.ingredientName} key={item.ingredientName}>{item.ingredientName}</MenuItem>
                                         })}
                                     </Select>
                                     <FormHelperText>{errors.sauce && touched.sauce && errors.sauce}</FormHelperText>
@@ -276,10 +224,12 @@ const CustomPizza = () => {
                                         <MenuItem value="none">
                                             <em>None</em>
                                         </MenuItem>
-                                        
-                                        {cheeseInitialValue.length > 0 && cheeseInitialValue.map((item)=>{  
-                                            const {_id, ingredientName}  = item
-                                                return <MenuItem value={ingredientName} key={_id}>{ingredientName}</MenuItem>
+                                        {/* <MenuItem value={"Mozzarella"}>Mozzarella</MenuItem>
+                                        <MenuItem value={"Gorgonzola"}>Gorgonzola</MenuItem>
+                                        <MenuItem value={"Parmesan"}>Parmesan</MenuItem>
+                                        <MenuItem value={"Robiola"}>Robiola</MenuItem> */}
+                                        {ingredients.length > 0 && ingredients[4].ingredients.map((item, index)=>{    
+                                                return <MenuItem value={item.ingredientName} key={item.ingredientName}>{item.ingredientName}</MenuItem>
                                         })}
                                     </Select>
                                     <FormHelperText>{errors.cheese && touched.cheese && errors.cheese}</FormHelperText>
@@ -295,11 +245,11 @@ const CustomPizza = () => {
                                         </div>
                                         {showVarietyDiv && (
                                             <div className='checkbox-variety'>
-                                                {vegInitialValue.map((item)=>{
-                                                    const {_id,ingredientName} = item
+                                                {ingredients[1].ingredients.map((item)=>{
+                                                    const {ingredientName} = item
                                                     return (
-                                                        <div key={_id}>
-                                                            <input type="checkbox" name={ingredientName} value={ingredientName} id={ingredientName} className="form-check-input" onChange={handleVeggiesChange}></input>
+                                                        <div key={ingredientName}>
+                                                            <input type="checkbox" name={ingredients[1].ingredientType} value={ingredientName} id={ingredientName} className="form-check-input" onChange={handleVeggiesChange}></input>
                                                             <label htmlFor={ingredientName} className="form-check-label">{ingredientName}</label>
                                                         </div>
                                                     )
@@ -319,12 +269,11 @@ const CustomPizza = () => {
                                         </div>
                                         {showMeatDiv && (
                                             <div className='checkbox-variety'>
-                                                {meatInitialValue.map((item)=>{
-                                                    const {_id,ingredientName} = item
+                                                {ingredients[0].ingredients.map((item)=>{
                                                     return(
-                                                        <div key={_id}>
-                                                            <input type="checkbox" name={ingredientName} value={item.ingredientName} id={ingredientName} className="form-check-input" onChange={handleMeatChange}></input>
-                                                            <label htmlFor={ingredientName} className="form-check-label">{ingredientName}</label>
+                                                        <div key={item.ingredientName}>
+                                                            <input type="checkbox" name={ingredients[0].ingredientType} value={item.ingredientName} id={item.ingredientName} className="form-check-input" onChange={handleMeatChange}></input>
+                                                            <label htmlFor={item.ingredientName} className="form-check-label">{item.ingredientName}</label>
                                                         </div>
                                                     )
                                                 })}
@@ -351,7 +300,6 @@ const CustomPizza = () => {
                             )}
                         </div>
                     )}
-
                     {values.sauce && (
                         <div>
                             <h4>Sauce:</h4>
@@ -363,7 +311,6 @@ const CustomPizza = () => {
                             )}
                         </div>
                     )}
-
                     {values.cheese && (
                         <div>
                             <h4>Cheese:</h4>
@@ -375,36 +322,35 @@ const CustomPizza = () => {
                             )}
                         </div>
                     )}
-                    
+                    {/* {values.cheese && <p>{values.cheese}</p>}
+                    {values.sauce && <p>{values.sauce}</p>} */}
 
-                    {vegItems.length > 0 && (
+                    {veggiesValue.length > 0 && (
                         <div className='meat-priceCount'>
                             <h4>Veggies:</h4>
-                            {vegItems && vegItems.map((item)=>{
-                                const {_id, ingredientName, price} = item
+                            {veggiesValue && veggiesValue.map((item, index)=>{
                                 veggiesCounter++
                                 console.log(veggiesCounter)
                                 return (
-                                    <div key={_id} style={{display:"flex",justifyContent:"space-between"}}>
-                                        <p>{ingredientName} * 1</p>
-                                        {veggiesCounter > 3 ? <p>Rs. {price}</p> : <p>Rs. {price * 0}(free)</p>}
+                                    <div key={index} style={{display:"flex",justifyContent:"space-between"}}>
+                                        <p>{item.ingredientName} * 1</p>
+                                        {veggiesCounter > 3 ? <p>Rs. {item.price}</p> : <p>Rs. {item.price * 0}(free)</p>}
                                     </div>
                                 )
                             })}
                         </div>
                     )}
 
-                    {meatItems.length > 0 && (
+                    {meatValue.length > 0 && (
                         <div className='meat-priceCount'>
                             <h4>Meat:</h4>
-                            {meatItems && meatItems.map((item)=>{
+                            {meatValue && meatValue.map((item, index)=>{
                                 meatCounter++
                                 console.log(meatCounter)
-                                const {_id, ingredientName, price} = item
                                 return (
-                                    <div key={_id} style={{display:"flex",justifyContent:"space-between"}}>
-                                        <p>{ingredientName} * 1</p>
-                                        {meatCounter > 1 ? <p>Rs. {price}</p> : <p>Rs. {price * 0}(free)</p>}
+                                    <div key={index} style={{display:"flex",justifyContent:"space-between"}}>
+                                        <p>{item.ingredientName} * 1</p>
+                                        {meatCounter > 1 ? <p>Rs. {item.price}</p> : <p>Rs. {item.price * 0}(free)</p>}
                                     </div>
                                 )
                             })}

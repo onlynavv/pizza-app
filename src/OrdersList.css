@@ -1,0 +1,48 @@
+.orderDetails {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.orderDetails-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.orderDetails-left > * {
+  margin-bottom: 10px;
+}
+
+.orderDetails-right > button {
+  background: #24963f;
+  color: white;
+  padding: 6px 8px;
+  border-radius: 5px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+}
+
+.stage-row {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  margin-top: 40px !important;
+  margin-bottom: 40px;
+  align-items: center;
+}
+
+.stage-row > div {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.stage-row > div > * {
+  margin-right: 5px;
+}
+
+.stage-header {
+  display: flex;
+  margin-bottom: 10px;
+}
